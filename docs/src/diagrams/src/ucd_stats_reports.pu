@@ -1,0 +1,24 @@
+@startuml ucd_stats_reports
+'Diagram config
+left to right direction
+
+' Actors
+actor Administrator as admin
+actor Użytkownik as user
+
+admin -|> user
+
+' Statystyki i raporty
+frame "Statystyki i raporty" as rect_stats_and_reports {
+    (Wyświetl statystyki kosztów) as show_stats_expenses
+    (Ustaw kryteria\nwyświetlania statystyk) as show_stats_shared_shopping_only
+    (Wyświetl podsumowanie\nwybranego miesiąca) as show_monthly_summary
+
+    show_stats_shared_shopping_only .> show_stats_expenses : <<extends>>
+}
+
+user -- show_stats_expenses
+user -- show_monthly_summary
+
+@enduml
+

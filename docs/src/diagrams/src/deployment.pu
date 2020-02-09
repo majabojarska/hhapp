@@ -1,0 +1,25 @@
+@startuml deployment
+
+node "Application Server" <<device>>{
+  node "Node.js" as node <<execution environment>>{
+    node "NestJS" as rest <<RESTful API web server>>{
+      artifact hhapp_pwr_back <<artifact>>
+    }
+  }
+
+  node "NGINX" as static <<static web server>>{
+    artifact hhapp_pwr_front <<artifact>>
+  }
+
+  node "MySQL Database" as db <<database system>>
+}
+
+node "User device" as user_machine <<device>>{
+  node "Web browser" as browser <<executable environment>>
+}
+
+static --- browser: <<protocol>>\nTCP/IP:80
+rest --- browser: <<protocol>>\nTCP/IP:3000
+db -down- rest
+
+@enduml

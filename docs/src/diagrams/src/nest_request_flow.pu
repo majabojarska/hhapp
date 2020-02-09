@@ -1,0 +1,41 @@
+@startuml nest_request_flow
+
+' Diagram przepływu sterowania przy obsłudze requesta (router(express) -> guard -> controller -> service -> repository -> DB)
+
+actor User as user
+boundary Router as router
+control Controller as controller
+control Guard as guard
+entity Service as service
+entity Repository as repo
+database Database as db
+
+'czyli router->controller->guard->controller->service
+
+user -> router : HTTP request
+router -> controller : Call controller
+controller -> guard : Authenticate
+
+
+alt Authentication failed
+
+controller <- guard  : Unauthorized
+router <- controller : Controller response
+user <- router : HTTP response 401
+
+else Authentication successful
+
+guard -> controller : Authorized
+controller -> service : Call service
+service -> repo : Call repository
+repo -> db : SQL query
+
+repo <- db : SQL response
+service <- repo : Return object
+controller <- service : Service response
+router <- controller : Controller response
+user <- router : HTTP response
+
+end
+
+@enduml

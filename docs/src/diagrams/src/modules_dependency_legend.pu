@@ -1,0 +1,10 @@
+@startuml modules_dependency_legend
+
+left to right direction
+
+component "ModuleA" as module_a
+component "ModuleB" as module_b
+
+module_a ....> module_b : ((depends on))
+
+@enduml

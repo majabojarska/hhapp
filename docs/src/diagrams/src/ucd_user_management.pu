@@ -1,0 +1,34 @@
+@startuml ucd_user_management
+'Diagram config
+left to right direction
+
+' Actors
+actor Administrator as admin
+actor Użytkownik as user
+
+admin -|> user
+
+' Zarzadzanie uzytkownikami i gospodarstwem
+frame "Zarządzanie użytkownikami i gospodarstwem" {
+    (Zaloguj do systemu) as login
+    (Aktualizuj dane użytkownika) as update_user
+    (Usuń użytkownika) as delete_user
+    (Dodaj użytkownika) as create_user
+    (Zmień rolę użytkownika) as change_user_role
+    (Zmień udział użytkownika\nw wydatkach) as change_contribution_percent
+}
+
+note "imię\nnazwisko\ndata urodzenia\nkolor" as user_data_note
+
+user_data_note .up. create_user
+user_data_note .up. update_user
+
+admin -- delete_user
+admin -- change_user_role
+admin -- change_contribution_percent
+admin -- create_user
+
+user -- login
+user -- update_user
+
+@enduml

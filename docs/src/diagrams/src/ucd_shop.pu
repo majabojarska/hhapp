@@ -1,0 +1,26 @@
+@startuml ucd_shop
+'Diagram config
+left to right direction
+
+' Actors
+actor Administrator as admin
+actor Użytkownik as user
+
+admin -|> user
+
+frame "CRUD Sklep" as crud_shop{
+    (Utwórz sklep) as shop_create
+    (Odczytaj sklep) as shop_read
+    (Zmień sklep) as shop_update
+    (Usuń sklep) as shop_delete
+
+    note "nazwa\nkolor\ndomyślna kategoria" as note_shop
+}
+
+user -- shop_create
+user -- shop_read
+user -- shop_update
+user -- shop_delete
+
+@enduml
+

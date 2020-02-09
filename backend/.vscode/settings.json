@@ -1,0 +1,4 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "jest.pathToJest": "docker-compose -f ./docker/development/docker-compose.yml --project-directory ./ exec -T app ./node_modules/.bin/jest"
+}

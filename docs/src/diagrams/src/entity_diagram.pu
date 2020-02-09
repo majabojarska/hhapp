@@ -1,0 +1,87 @@
+@startuml entity_relationship_diagram
+top to bottom direction
+hide circle
+skinparam linetype ortho
+hide empty methods
+hide empty members
+
+hide empty methods
+hide empty members
+entity "Zakup" as purchase {
+    nazwa
+    cena
+    ilość
+    data
+    sklep
+    kategoria
+    dla kogo zakupiono
+    status współdzielenia
+
+}
+
+entity "Sklep" as shop {
+    nazwa
+    kolor
+    domyślna kategoria
+}
+
+entity "Kategoria" as category {
+    nazwa
+    kolor
+    status współdzielenia
+}
+
+entity "Użytkownik" as user {
+    imię
+    nazwisko
+    data urodzenia
+    kolor
+    podział kosztów
+}
+
+entity "Lista zakupów" as shopping_list {
+    nazwa
+    sklep
+}
+
+entity "Element listy zakupów" as shopping_list_item {
+    nazwa
+    ilość
+}
+
+entity "Wydatek" as expense {
+    nazwa
+    kwota
+    data
+}
+
+entity "Reguła obliczeń kosztów\nzużycia mediów" as bill_calc_rule {
+    nazwa
+    cena za jednostkę
+    jednostka
+}
+
+entity "Zużycie mediów" as bill {
+    nazwa medium
+    ilość
+    data od
+    data do
+}
+
+purchase "1-2" }o--left-|{  user : "dokonał <"
+shopping_list }o-down--o| user : "należy do >"
+bill }o---right-|| user : "należy do >"
+expense }o-down-|| user : "dokonał <"
+
+shopping_list_item }o-right-|| shopping_list : "należy do >"
+shopping_list }o-up-|| shop : "powiązana z >"
+
+purchase }o-down-|| shop : "dokonany w >"
+category |o-down-o{ shop : "należy do <"
+purchase }o-up-|| category : "należy do >"
+
+bill_calc_rule ||-up-o{ bill : "obliczone na\npodstawie <"
+
+
+@enduml
+

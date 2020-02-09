@@ -1,0 +1,62 @@
+@startuml ucd_expenses
+'Diagram config
+left to right direction
+
+' Actors
+actor Administrator as admin
+actor Użytkownik as user
+
+admin -left-|> user
+
+' Wydatki gospodarstwa
+' Jednorazowe wydatki
+frame "CRUD Wydatek" as crud_expense{
+    (Utwórz wydatek) as create_expense
+    (Odczytaj wydatek) as read_expense
+    (Zmień wydatek) as update_expense
+    (Usuń wydatek) as delete_expense
+    
+    note "nazwa\nkwota\ndata" as note_expense
+}
+
+' Reguły obliczeń zużycia mediów
+frame "CRUD Reguła obliczeń kosztów\nzużycia mediów" as crud_bill_calc_rule{
+    (Utwórz regułę) as create_bill_calc_rule
+    (Odczytaj regułę) as read_bill_calc_rule
+    (Zmień regułę) as update_bill_calc_rule
+    (Usuń regułę) as delete_bill_calc_rule
+
+    note "nazwa\ncena za jednostkę\njednostka" as note_crud_bill_calc_rule
+}
+
+' Zużycie mediów
+frame "CRUD Zużycie mediów" as crud_bill{
+    (Utwórz zużycie) as create_bill
+    (Odczytaj zużycie) as read_bill
+    (Zmień zużycie) as update_bill
+    (Usuń zużycie) as delete_bill
+    
+    note "medium\nilość\ndata od\ndata do" as note_crud_bill
+}
+
+' user -right- crud_expense
+' user -down-- crud_bill_calc_rule
+' user -left-- crud_bill
+
+user -right- create_expense
+user -right- read_expense
+user -right- update_expense
+user -right- delete_expense
+
+user -down- create_bill_calc_rule
+user -down- read_bill_calc_rule
+user -down- update_bill_calc_rule
+user -down- delete_bill_calc_rule
+
+user -up- create_bill
+user -up- read_bill
+user -up- update_bill
+user -up- delete_bill
+
+
+@enduml

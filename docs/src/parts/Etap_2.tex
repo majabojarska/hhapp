@@ -1,0 +1,71 @@
+
+
+\newpage
+
+\section{Architektura}
+Aplikacja wykorzystuje architekturę trójwarstwową, gdzie interface użytkownika, część zawierająca logikę biznesową i~baza danych stanowią oddzielne, osobno rozwijane moduły. Użytkownik ma dostęp do aplikacji poprzez przeglądarkę internetową, co przy zachowaniu responsywności interface'u, daje mu dowolność wyboru wykorzystywanego typu urządzenia. Użytkownik komunikując się z aplikacją wysyła zapytania do dwóch serwerów:
+\begin{enumerate}
+  \item Do serwera plików statycznych, który wysyła kod części działającej po stronie przeglądarki użytkownika - aplikacji \textit{SPA}.
+  \item Do serwera zarządzającym zasobami aplikacji zapewniającym bezstanową komunikację w~stylu REST, który odpowiedzialny jest za pobieranie i~modyfikowanie stanu aplikacji.
+\end{enumerate}
+Podział ruchu na dwa serwery pozwala odseparować pobieranie zasobów aplikacji od zapytań ingerujących w~jej stan - przetwarzających dane, co ułatwi późniesze skalowanie aplikacji. w~późniejszych fazach rozwoju projektu serwer plików statycznych może znajdować się na innej maszynie.
+
+\subsection{Multitenancy}
+Struktura danych aplikacji nie zakłada podziału przypisania encji na wiele gospodarstw, co oznacza, że jedna baza danych może obsłużyć tylko jedno gospodarstwo. Jest to celowa konstrukcja, która zakłada w~przyszłości zastosowanie architektury multitenancy. Zakłada ona dynamiczne przekierowywanie ruchu do odpowiedniej bazy danych w~zależności od ustalonej zmiennej - np. subdomeny. Aplikacja w~zakładanej obecnie formie jest przeznaczona do instalacji \textit{on premises}.
+
+\section{Technologie}
+Baza danych aplikacji będzie działać w~oparciu o DBMS \textit{MariaDB}\cite{mariadb}, który bazuje na i~jest kompatybilny z popularnym systemem \textit{MySQL}. Serwerem plików statycznych będzie \textit{NGINX}\cite{nginx}, który jest bardziej przystępny w~konfiguracji, od stanowiącego konkurencję serwera \textit{Apache}\cite{Apache}. Zużywa on mniej zasobów oraz osiąga większą wydajność. 
+
+Środowiskiem uruchomieniowym dla aplikacji udostępniającej RESTful API będzie \textit{NodeJS}\cite{NodeJS}. Aplikacja ta będzie oparta na frameworku \textit{NestJS}\cite{NestJS}, który pozwala na tworzenie wydajnych i~skalowalnych aplikacji z użyciem języka \textit{TypeScript}. \textit{NestJS} będzie będzie współpracował z frameworkiem \textit{TypeORM}\cite{typeorm} obsługującym mapowanie obiektowo-relacyjne.
+
+Frontend aplikacji, przesyłany do użytkownika za pomocą serwera plików statycznych, zostanie stworzony z użyciem języka \textit{TypeScript} i~frameworka \textit{VueJS}\cite{VueJS}. Za wygląd aplikacji będzie odpowiadać framework \textit{Vuetify}\cite{Vuetify}, który zaopatruje w~gotowy zestaw komponentów, które wyglądem zgodne są ze stylem \textit{Material Design}\cite{Material Design}.
+
+Całość uruchamiana będzie z użyciem wirtualizacji na poziomie systemu operacyjnego, z użyciem środowiska \textit{Docker}\cite{Docker}. Pozwoli to zminimalizować liczbę kroków potrzebnych do konfiguracji środowiska na różnych maszynach oraz ujednolici je na maszynach deweloperów, co poskutkuje minimalizacją błędów związanych z różnicą konfiguracji w~różnych środowiskach.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[keepaspectratio, height=15cm]{diagrams/out/deployment.png}
+  \caption{Diagram wdrożenia.}
+\end{figure}
+
+
+\section{Baza danych}
+
+\subsection{Diagram encji}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[keepaspectratio, height=15cm]{diagrams/out/entity_relationship_diagram.png}
+  \caption{Diagram encji.}
+\end{figure}
+
+\newpage % Bo ładniej na nowej stronie
+
+\subsection{Transakcje i~spójność danych}
+
+W celu zachowania spójności danych w~bazie danych, transakcje są realizowane ograniczeniem pola\\\textit{\say{ON DELETE SET NULL}}, \textit{\say{ON DELETE CASCADE}} lub \textit{\say{ON DELETE RESTRICT}}.
+
+\begin{enumerate}
+
+  \item Usunięcie użytkownika powoduje:
+  \begin{itemize} 
+    \item  ustawienie odniesień do niego w~encji \textit{Lista zakupów} na wartość \textit{NULL}.
+    \item Usunięcie zakupów, których dokonał, czyli takich, w~których jest wpisany w~pole\\\textit{boughtBy}. Jeżeli usuwany użytkownik jest wpisany w~danej krotce w~pole \textit{boughtFor}, jest ono ustawiane na wartość \textit{NULL}.
+    \item Usunięcie jego wydatków.
+    \item Usunięcie jego wpisów zużycia mediów.
+  \end{itemize}
+
+  \item Usunięcie listy zakupów powoduje usunięcie przedmiotów znajdujących się w~tej liście.
+
+  \item Usunięcie sklepu powoduje ustawienie odniesień do niego w~encji \textit{Lista zakupów} na wartość \textit{NULL}.
+  
+  \item Encje \textit{Kategoria} i~\textit{Sklep} nie mogą zostać usunięte jeśli powiązane są z encją \textit{Zakup}.
+
+  \item Encja \textit{Reguła obliczeń kosztów zużycia mediów} nie może zostać usunięta, jeśli jest powiązana z encją \textit{Zużycie mediów}.
+  
+  \item Konwersja listy zakupów na zakupy powoduje:
+  \begin{itemize}
+    \item Dodanie nowych krotek encji \textit{Zakup}.
+    \item Usunięcie konwertowanej listy oraz wszystkich jej przedmiotów.
+  \end{itemize}
+\end{enumerate}

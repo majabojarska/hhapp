@@ -1,0 +1,103 @@
+\documentclass[12pt]{article}
+\usepackage{scrextend}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}%polskie znaki
+\usepackage[utf8]{inputenc}%polskie znaki
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tabulary}
+\usepackage{etoc}
+\usepackage[normalem]{ulem} 
+\renewcommand{\baselinestretch}{1.5}
+\graphicspath{ {img/} }
+\newgeometry{lmargin=2.0cm, rmargin=2.0cm, tmargin=2.0cm, bmargin=2.0cm}
+\usepackage{tikz}
+\usepackage[bf]{caption}
+\usepackage{dirtytalk}
+\usepackage{listings}
+\usepackage{xcolor}
+\newcommand{\paragraphnewline}[1]{\paragraph{#1}\mbox{}\\}
+
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinelanguage{JavaScript}{
+  morekeywords=[1]{break, continue, delete, else, for, function, if, in,
+    new, return, this, typeof, var, void, while, with, import, from, as, readonly, string, export, class, async, implements},
+  % Literals, primitive types, and reference types.
+  morekeywords=[2]{false, null, true, boolean, number, undefined,
+    Array, Boolean, Date, Math, Number, String, Object, Promise},
+  % Built-ins.
+  morekeywords=[3]{eval, parseInt, parseFloat, escape, unescape},
+  sensitive,
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morecomment=[s]{/**}{*/}, % JavaDoc style comments
+  morestring=[b]',
+  morestring=[b]"
+}[keywords, comments, strings]
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\renewcommand{\lstlistlistingname}{Spis listingów}\lstset{style=mystyle}
+
+
+
+\title{ 
+    \vspace*{50mm}
+    \textsc{
+        \textbf{Bazy Danych 2}\\
+        \large Household App - Zarządzanie gospodarstwem domowym 
+    }
+} 
+\author{
+Maja Bojarska\\
+Damian Koper\\
+}
+
+%\date{14 października 2019}
+\date{19 stycznia 2020}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\setcounter{tocdepth}{2}
+\localtableofcontents
+\listoffigures
+\lstlistoflistings
+
+\newpage
+
+\input{parts/Etap_1.tex}
+\input{parts/Etap_2.tex}
+\input{parts/Etap_3.tex}
+
+\input{parts/Bib.tex}
+
+\end{document}

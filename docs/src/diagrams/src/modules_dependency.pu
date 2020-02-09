@@ -1,0 +1,48 @@
+@startuml modules_dependency
+
+left to right direction
+
+' component "PassportModule" as passport_module
+' component "TypeOrmModule" as type_orm_module
+' component "ConfigModule" as config_module
+' component "AuthModule" as auth_module
+
+component "AppModule" as app_module
+component "ExpensesModule" as expenses_module
+component "BillCalcRulesModule" as bill_calc_rules_module
+component "PurchasesModule" as purchases_module
+component "CategoriesModule" as categories_module
+component "ShopsModule" as shops_module
+component "ShoppingListsModule" as shopping_lists_module
+component "UsersModule" as users_module
+component "StatsModule" as stats_module
+component "BillsModule" as bills_module
+component "ShoppingListItemsModule" as shopping_list_items_module
+
+app_module .left...> expenses_module
+app_module ..> bill_calc_rules_module
+app_module ..> purchases_module
+app_module ..> categories_module
+app_module ..> shops_module
+app_module ..> shopping_lists_module
+app_module ..> users_module
+app_module .right.> stats_module
+
+bill_calc_rules_module ..> bills_module
+
+purchases_module .up.> categories_module
+purchases_module .left.> shops_module
+
+shops_module .up.> categories_module
+
+shopping_lists_module .right.> shops_module
+shopping_lists_module .left.> shopping_list_items_module
+
+users_module ..> purchases_module
+users_module ..> shopping_lists_module
+users_module .left..> expenses_module
+users_module .left..> bill_calc_rules_module
+
+stats_module .left.> purchases_module
+
+@enduml

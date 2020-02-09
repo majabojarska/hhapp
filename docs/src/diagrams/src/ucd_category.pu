@@ -1,0 +1,26 @@
+@startuml ucd_category
+'Diagram config
+left to right direction
+
+' Actors
+actor Administrator as admin
+actor Użytkownik as user
+
+admin -|> user
+
+frame "CRUD Kategoria" as crud_category{
+    (Utwórz kategorię) as category_create
+    (Odczytaj kategorię) as category_read
+    (Zmień kategorię) as category_update
+    (Usuń kategorię) as category_delete
+    
+    note "nazwa\nkolor\nstatus współdzielenia" as note_category
+}
+
+user -- category_create
+user -- category_read
+user -- category_update
+user -- category_delete
+
+@enduml
+

@@ -1,0 +1,157 @@
+\section{Zespół}
+Członkowie zespołu tworzącego aplikację ze wstępnym podziałem na role:
+\begin{itemize}
+    \item Maja Bojarska:
+        \begin{itemize}
+            \item Projekt, implementacja i testowanie encji bazy danych wraz z mapowaniem obiektowo-relacyjnym.
+            \item Projekt, implementacja i testowanie RESTful API.
+        \end{itemize}
+    \item Damian Koper:
+        \begin{itemize}
+            \item Projekt odwzorowania obiektów świata rzeczywistego za pomocą encji w bazie danych.
+            \item Projekt i implementacja interfejsu użytkownika.
+            \item Testy jednostkowe i integracyjne poszczególnych komponentów systemu.
+            \item Testy end-to-end interfejsu użytkownika.
+        \end{itemize}
+\end{itemize}
+
+\section{Opis systemu}
+Gospodarstwo domowe jest miejscem zrzeszającym domowników. Każda z osób ma wkład w jego rozwój. W celu śledzenia i równoważenia kosztów wynikających z użytkowania dostępnych zasobów potrzebny jest system śledzący i obliczający wydatki. Domownicy mogą dzielić się kosztami utrzymania po równo, lub odgórnie zdefiniować zasady określające procentowy wkład każdej osoby.
+
+Działania te, razem ze śledzeniem zużycia mediów (woda, prąd, gaz), pozwolą na dokładniejsze przeanalizowanie wydatków. W przyszłości może się to przełożyć na bardziej świadome zarządzanie zasobami, a dzięki temu na optymalizację ponoszonych kosztów.
+
+\newpage
+
+\section{Wymagania funkcjonalne}
+
+\subsection{Zarządzanie użytkownikami i gospodarstwem}
+
+\begin{enumerate}
+    \item Użytkownik może zalogować się na swoje konto.
+    \item Użytkownik może wylogować się ze swojego konta.
+    \item Użytkownik może edytować dane swojego konta.
+    \item Administrator może utworzyć konto użytkownika.
+    \item Administrator może edytować dane i rolę użytkownika.
+    \item Administrator może usunąć konto użytkownika.
+    \item Administrator może zmienić ustawienia procentowego udziału danego użytkownika w wydatkach gospodarstwa.
+\end{enumerate}
+    
+\subsection{Zakupy}
+
+\begin{enumerate}
+    \item Użytkownik może wprowadzić dane zakupu przedmiotu.
+    \item Użytkownik może edytować dane zakupu przedmiotu.
+    \item Użytkownik może usuwać dane zakupu przedmiotu.
+    \item Użytkownik może tworzyć sklepy.
+    \item Użytkownik może edytować sklepy.
+    \item Użytkownik może usuwać sklepy.
+    \item Użytkownik może tworzyć kategorie.
+    \item Użytkownik może edytować kategorie.
+    \item Użytkownik może usuwać kategorie.
+\end{enumerate}
+
+\subsection{Listy zakupów}
+
+\begin{enumerate}
+    \item Użytkownik może dodać listy zakupów
+    \item Użytkownik może edytować listy zakupów
+    \item Użytkownik może usuwać listy zakupów
+    \item Użytkownik może dodać pozycję listy zakupów.
+    \item Użytkownik może edytować pozycję listy zakupów.
+    \item Użytkownik może usuwać pozycję listy zakupów.
+    \item Użytkownik może przekonwertować listę zakupów na wstępnie utworzone dane o zakupach.
+\end{enumerate}
+
+\subsection{Wydatki gospodarstwa}
+
+\begin{enumerate}
+    \item Uzytkownik może wprowadzić dane o jednorazowych wydatkach.
+    \item Uzytkownik może edytować dane o jednorazowych wydatkach.
+    \item Uzytkownik może usuwać dane o jednorazowych wydatkach.
+    \item Użytkownik może wprowadzić reguły obliczeń kosztów zużycia mediów.    
+    \item Użytkownik może edytować reguły obliczeń kosztów zużycia mediów.    
+    \item Użytkownik może usuwać reguły obliczeń kosztów zużycia mediów.    
+    \item Użytkownik może wprowadzić dane zużycia mediów.
+    \item Użytkownik może edytować dane zużycia mediów.
+    \item Użytkownik może usuwać dane zużycia mediów.
+\end{enumerate}
+
+\newpage
+
+\subsection{Statystyki i raporty}
+
+\begin{enumerate}
+    \item Użytkownik może wyświetlić statystyki kosztów zakupów dla każdego użytkownika, dla ustawionego okresu:
+    \begin{enumerate}
+        \item Zakupy w czasie jako wykres liniowy.
+        \item Zakupy zgrupowane w kategorie jako wykres kolumnowy.
+        \item Procentowy udział kategorii we wszystkich zakupach jako wykres kołowy.
+    \end{enumerate}
+    \item Użytkownik może wyświetlić statystyki dla wszystkich zakupów lub tylko dla zakupów współdzielonych.
+    \item Użytkownik może wyświetlić liczbowe podsumowanie danego miesiąca zawierające:
+    \begin{enumerate}
+        \item Kwoty zakupów współdzielonych podzielone na wszystkich użytkowników z uwzględnionym ustawionym podziałem.
+        \item Kwoty do zapłaty dla poszczególnych użytkowników pozostałym użytkownikom wynikające z wprowadzonych zakupów i opłaconych rachunków.
+    \end{enumerate}
+\end{enumerate}
+
+\section{Wymagania niefunkcjonalne}
+\begin{enumerate}
+    \item Aplikacja zapewnia bezpieczeństwo sesji użytkownika.
+    \item Aplikacja jest odporna na popularne ataki - SQL Injection, XSS, Man in the middle.
+    \item Interfejs graficzny aplikacji działa po stronie przeglądarki użytkownika i komunikuje się z jej serwerem za pomocą RESTful API.
+    \item Aplikacja zapewnia spójność interfejsu z aplikacjami mobilnymi używając stylu \textit{Material Design}.
+    \item Aplikacja zapewnia funkcjonalności Progressive Web App.
+    \item Architektura aplikacji musi umożliwiać szybką instalację wszystkich jej komponentów, serwisów i jej uruchomienie za pomocą jednej komendy.
+\end{enumerate}
+
+\newpage
+\section{Przypadki użycia}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[keepaspectratio,
+    width=\linewidth]{diagrams/out/ucd_user_management.png}
+    \caption{Diagram przypadków użycia - użytkownicy.}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{diagrams/out/ucd_shop.png}
+        \caption{Diagram przypadków użycia - sklepy.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{diagrams/out/ucd_category.png}
+        \caption{Diagram przypadków użycia - kategorie.}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[keepaspectratio,
+    width=\linewidth]{diagrams/out/ucd_shopping_list.png}
+    \caption{Diagram przypadków użycia - lista zakupów.}
+\end{figure}
+
+\begin{figure}[!htb]
+    \centering
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[keepaspectratio, width=\textwidth, height=10cm]{diagrams/out/ucd_purchase.png}
+        \caption{Diagram przypadków użycia - zakupy.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{diagrams/out/ucd_stats_reports.png}
+        \caption{Diagram przypadków użycia - statystyki.}
+    \end{minipage}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[keepaspectratio,
+    width=\linewidth,
+    height=\dimexpr\textheight-2\baselineskip]{diagrams/out/ucd_expenses.png}
+    \caption{Diagram przypadków użycia - wydatki.}
+\end{figure}

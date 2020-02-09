@@ -1,0 +1,26 @@
+@startuml ucd_purchase
+'Diagram config
+left to right direction
+
+' Actors
+actor Administrator as admin
+actor Użytkownik as user
+
+admin -|> user
+
+frame "CRUD Zakup" as crud_purchase {
+    (Utwórz zakup) as purchase_create
+    (Odczytaj zakup) as purchase_read
+    (Zmień zakup) as purchase_update
+    (Usuń zakup) as purchase_delete
+
+    note "nazwa\ncena\nilość\ndata\nsklep\nkategoria\ndla kogo zakupiono\nstatus współdzielenia" as note_purchase
+}
+
+user -- purchase_create
+user -- purchase_read
+user -- purchase_update
+user -- purchase_delete
+
+@enduml
+

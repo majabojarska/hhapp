@@ -1,0 +1,49 @@
+@startuml ucd_shopping_list
+'Diagram config
+left to right direction
+
+' Actors
+actor Administrator as admin
+actor Użytkownik as user
+
+admin -|> user
+
+frame "CRUD Lista zakupów" as crud_shopping_list {
+    (Utwórz listę zakupów) as create_shopping_list
+    (Odczytaj listę zakupów) as read_shopping_list
+    (Zmień listę zakupów) as update_shopping_list
+    (Usuń listę zakupów) as delete_shopping_list
+    (Konwertuj listę zakupów \n na dane o zakupach) as convert_shopping_list
+
+    note "nazwa\nsklep" as note_shopping_list
+}
+
+frame "CRUD Element listy zakupów" as crud_shopping_list_item {
+    (Utwórz element listy zakupów) as create_shopping_list_item
+    (Odczytaj element listy zakupów) as read_shopping_list_item
+    (Zmień element listy zakupów) as update_shopping_list_item
+    (Usuń element listy zakupów) as delete_shopping_list_item
+
+    note "nazwa\nilość" as note_shopping_list_item
+}
+
+frame "CRUD Zakup" as crud_purchase {
+    (Utwórz zakup) as purchase_create
+}
+
+user -up- create_shopping_list
+user -up- read_shopping_list
+user -up- update_shopping_list
+user -up- delete_shopping_list
+user -up- convert_shopping_list
+
+user -down- create_shopping_list_item
+user -down- read_shopping_list_item
+user -down- update_shopping_list_item
+user -down- delete_shopping_list_item
+
+convert_shopping_list .left.>  delete_shopping_list : <<includes>>
+convert_shopping_list .up.>  purchase_create : <<includes>>
+
+@enduml
+
