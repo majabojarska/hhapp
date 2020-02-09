@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="50%" src="img/hhapp_logo_white.png">
+</p>
+
 # About
 hhapp is a progressive web app made to simplify the management of household expenses. Made for a university project.  
 
